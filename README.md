@@ -3,9 +3,17 @@
 
 # 配置
 
+Quantumult X：
+
 [QuanX.conf](https://raw.githubusercontent.com/walls1717/quanX-conf/master/QuanX.conf)
 
 https://raw.githubusercontent.com/walls1717/quanX-conf/master/QuanX.conf
+
+ShadowRocket：
+
+[ShadowRocket.conf](https://raw.githubusercontent.com/walls1717/quanX-conf/master/QuanX.conf)
+
+https://raw.githubusercontent.com/walls1717/qsc/master/ShadowRocket.conf
 
 # 参考
 
