@@ -1,0 +1,227 @@
+# cfw预处理配置文件，更新订阅时自动合并，请确保没有开启diff。
+# 作者 walls1717
+# 最后更新时间 2023-01-18 14:09
+
+parsers: # array
+  - reg: ^.*$
+    code: |
+      module.exports.parse = (raw, { yaml }) => {
+        const rawObj = yaml.parse(raw)
+        const groups = []
+        const rules = []
+        return yaml.stringify({ ...rawObj, 'proxy-groups': groups, rules })
+      }
+    yaml:
+      prepend-proxy-groups: # 建立策略组
+        - name: OutSide
+          type: select
+          proxies:
+            - 新加坡
+            - 香港
+            - 日本
+            - 台湾
+            - 美国
+            - 韩国
+            - 土耳其
+            - 菲律宾
+            - 其他
+
+        - name: Final
+          type: select
+          proxies:
+            - OutSide
+            - DIRECT
+
+        - name: YouTube
+          type: select
+          proxies:
+            - 香港
+            - 新加坡
+            - 日本
+            - 台湾
+            - 美国
+            - OutSide
+
+        - name: Spotify
+          type: select
+          proxies:
+            - 新加坡
+            - 香港
+            - 日本
+            - 台湾
+            - 美国
+            - OutSide
+            - DIRECT
+
+        - name: Google
+          type: select
+          proxies:
+            - OutSide
+            - DIRECT
+
+        - name: Microsoft
+          type: select
+          proxies:
+            - DIRECT
+            - OutSide
+
+        - name: Apple
+          type: select
+          proxies:
+            - DIRECT
+            - OutSide
+
+        - name: GlobalMedia
+          type: select
+          proxies:
+            - OutSide
+            - DIRECT
+
+        - name: Global
+          type: select
+          proxies:
+            - OutSide
+            - DIRECT
+
+        - name: 新加坡
+          type: select
+
+        - name: 香港
+          type: select
+
+        - name: 日本
+          type: select
+
+        - name: 台湾
+          type: select
+
+        - name: 韩国
+          type: select
+
+        - name: 美国
+          type: select
+
+        - name: 土耳其
+          type: select
+
+        - name: 菲律宾
+          type: select
+
+        - name: 其他
+          type: select
+      commands:
+        - proxy-groups.新加坡.proxies=[]proxyNames|新加坡
+        - proxy-groups.香港.proxies=[]proxyNames|香港 # 向指定策略组添加订阅中的节点名，可使用正则过滤
+        - proxy-groups.日本.proxies=[]proxyNames|日本
+        - proxy-groups.台湾.proxies=[]proxyNames|台
+        - proxy-groups.美国.proxies=[]proxyNames|美国
+        - proxy-groups.韩国.proxies=[]proxyNames|韩国
+        - proxy-groups.土耳其.proxies=[]proxyNames|土耳其
+        - proxy-groups.菲律宾.proxies=[]proxyNames|菲律宾
+        - proxy-groups.其他.proxies=[]proxyNames|^[^香日台新韩美土菲]*$ # 这个可以自定义，这个正则的意思是排除节点名字有“香日台新韩美”的节点。
+
+        # 为各个策略组添加一个DIRECT，避免机场节点无法匹配上面的正则筛选而导致配置出错。应该有其他办法避免，但是我不会。
+        - proxy-groups.香港.proxies.1+DIRECT
+        - proxy-groups.台湾.proxies.1+DIRECT
+        - proxy-groups.日本.proxies.1+DIRECT
+        - proxy-groups.韩国.proxies.1+DIRECT
+        - proxy-groups.新加坡.proxies.1+DIRECT
+        - proxy-groups.美国.proxies.1+DIRECT
+        - proxy-groups.土耳其.proxies.1+DIRECT
+        - proxy-groups.菲律宾.proxies.1+DIRECT
+        - proxy-groups.其他.proxies.1+DIRECT
+
+        # - proxy-groups.节点名字.proxies.0+DIRECT # 向指定分组第一个位置添加一个 DIRECT 节点名
+        # 一些可能用到的正则过滤节点示例，使分组更细致
+        # []proxyNames|a                         # 包含a
+        # []proxyNames|^(.*)(a|b)+(.*)$          # 包含a或b
+        # []proxyNames|^(?=.*a)(?=.*b).*$        # 包含a和b
+        # []proxyNames|^((?!b).)*a((?!b).)*$     # 包含a且不包含b
+        # []proxyNames|^((?!b|c).)*a((?!b|c).)*$ # 包含a且不包含b或c
+        # 更多正则教程，请看这里：https://deerchao.cn/tutorials/regex/regex.htm#top
+
+      # 添加规则
+      prepend-rules: # 规则由上往下遍历，如上面规则已经命中，则不再往下处理
+        - RULE-SET,Advertising,REJECT
+        - RULE-SET,YouTube,YouTube
+        - RULE-SET,YouTubeMusic,YouTube
+        - RULE-SET,Spotify,Spotify
+        - RULE-SET,Google,Google
+        - RULE-SET,Microsoft,Microsoft
+        - RULE-SET,GlobalMedia,GlobalMedia
+        - RULE-SET,Global,Global
+        - RULE-SET,Apple,Apple
+        - RULE-SET,China,DIRECT
+        - GEOIP,CN,DIRECT
+        - MATCH,Final
+      # 添加规则集
+      mix-rule-providers:
+        Advertising:
+          type: http
+          behavior: classical
+          url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising_Classical.yaml"
+          path: ./ruleset/Advertising.yaml
+          interval: 86400
+
+        YouTube:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTube/YouTube.yaml"
+          path: ./ruleset/YouTube.yaml
+          interval: 86400
+
+        YouTubeMusic:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTubeMusic/YouTubeMusic.yaml"
+          path: ./ruleset/YouTubeMusic.yaml
+          interval: 86400
+
+        Spotify:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Spotify/Spotify.yaml"
+          path: ./ruleset/Spotify.yaml
+          interval: 86400
+
+        Google:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml"
+          path: ./ruleset/Google.yaml
+          interval: 86400
+
+        Microsoft:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml"
+          path: ./ruleset/Microsoft.yaml
+          interval: 86400
+
+        GlobalMedia:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml"
+          path: ./ruleset/GlobalMedia_Classical.yaml
+          interval: 86400
+
+        Global:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Global/Global_Classical.yaml"
+          path: ./ruleset/Global_Classical.yaml
+          interval: 86400
+
+        Apple:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple.yaml"
+          path: ./ruleset/Apple.yaml
+          interval: 86400
+
+        China:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/China/China_Classical.yaml"
+          path: ./ruleset/China_Classical.yaml
+          interval: 86400
