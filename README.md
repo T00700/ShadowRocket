@@ -15,6 +15,10 @@ ShadowRocket：
 
 https://raw.githubusercontent.com/walls1717/qsc/master/ShadowRocket.conf
 
+cfw：
+
+[cfw.yml](./cfw.yml)
+
 # 参考
 
 规则模板：https://github.com/sve1r/Rules-For-Quantumult-X
