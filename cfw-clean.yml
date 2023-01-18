@@ -1,0 +1,142 @@
+# cfw预处理配置文件，更新订阅时自动合并，请确保没有开启diff。
+# 此配置没有进行地区区分，只对常用服务进行单独分流。
+# 作者 walls1717
+# 最后更新时间 2023-01-18 17:40
+
+parsers: # array
+  - reg: ^.*$
+    code: |
+      module.exports.parse = (raw, { yaml }) => {
+        const rawObj = yaml.parse(raw)
+        const groups = []
+        const rules = []
+        return yaml.stringify({ ...rawObj, 'proxy-groups': groups, rules })
+      }
+    yaml:
+      prepend-proxy-groups: # 建立策略组
+        - name: 🔰国外流量
+          type: select
+
+        - name: ⚓️其他流量
+          type: select
+          proxies:
+            - 🔰国外流量
+            - 🚀直接连接
+
+        - name: 🎬YouTube
+          type: select
+
+        - name: 🎬Spotify
+          type: select
+
+        - name: 🎬国外媒体
+          type: select
+
+        - name: 🍎苹果服务
+          type: select
+          proxies:
+            - 🔰国外流量
+            - 🚀直接连接
+
+        - name: 💻微软服务
+          type: select
+          proxies:
+            - 🔰国外流量
+            - 🚀直接连接
+
+        - name: 🚀直接连接
+          type: select
+          proxies:
+            - DIRECT
+
+      commands:
+        - proxy-groups.🔰国外流量.proxies=[]proxyNames|^.*$
+        - proxy-groups.🎬YouTube.proxies=[]proxyNames|^.*$
+        - proxy-groups.🎬Spotify.proxies=[]proxyNames|^.*$
+        - proxy-groups.🎬国外媒体.proxies=[]proxyNames|^.*$
+        - proxy-groups.🎬Spotify.proxies.0+DIRECT
+
+      prepend-rules: # 规则由上往下遍历，如上面规则已经命中，则不再往下处理
+        - RULE-SET,Advertising,REJECT
+        - RULE-SET,YouTube,🎬YouTube
+        - RULE-SET,YouTubeMusic,🎬YouTube
+        - RULE-SET,Spotify,🎬Spotify
+        - RULE-SET,Google,🔰国外流量
+        - RULE-SET,Microsoft,💻微软服务
+        - RULE-SET,GlobalMedia,🎬国外媒体
+        - RULE-SET,Global,🔰国外流量
+        - RULE-SET,Apple,🍎苹果服务
+        - RULE-SET,China,DIRECT
+        - GEOIP,CN,DIRECT
+        - MATCH,⚓️其他流量
+
+      mix-rule-providers:
+        Advertising:
+          type: http
+          behavior: classical
+          url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising_Classical.yaml"
+          path: ./ruleset/Advertising.yaml
+          interval: 86400
+
+        YouTube:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTube/YouTube.yaml"
+          path: ./ruleset/YouTube.yaml
+          interval: 86400
+
+        YouTubeMusic:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/YouTubeMusic/YouTubeMusic.yaml"
+          path: ./ruleset/YouTubeMusic.yaml
+          interval: 86400
+
+        Spotify:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Spotify/Spotify.yaml"
+          path: ./ruleset/Spotify.yaml
+          interval: 86400
+
+        Google:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml"
+          path: ./ruleset/Google.yaml
+          interval: 86400
+
+        Microsoft:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Microsoft/Microsoft.yaml"
+          path: ./ruleset/Microsoft.yaml
+          interval: 86400
+
+        GlobalMedia:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml"
+          path: ./ruleset/GlobalMedia_Classical.yaml
+          interval: 86400
+
+        Global:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Global/Global_Classical.yaml"
+          path: ./ruleset/Global_Classical.yaml
+          interval: 86400
+
+        Apple:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple.yaml"
+          path: ./ruleset/Apple.yaml
+          interval: 86400
+
+        China:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/China/China_Classical.yaml"
+          path: ./ruleset/China_Classical.yaml
+          interval: 86400

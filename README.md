@@ -17,7 +17,9 @@ https://raw.githubusercontent.com/walls1717/qsc/master/ShadowRocket.conf
 
 cfw：
 
-[cfw.yml](./cfw.yml)
+[cfw.yml](./cfw.yml)：区分常用地区，常用服务单独分流。
+
+[cfw-clean.yml](./cfw-clean.yml)：不区分地区，常用服务单独分流。
 
 # 参考
 
