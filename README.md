@@ -3,7 +3,7 @@
 
 # 配置
 
-Quantumult X：
+## Quantumult X
 
 [QuanX.conf](https://raw.githubusercontent.com/walls1717/quanX-conf/master/QuanX.conf)
 
@@ -15,7 +15,7 @@ CDN加速：
 
 `https://cdn.jsdelivr.net/gh/walls1717/qsc@master/QuanX.conf`
 
-ShadowRocket：
+## ShadowRocket
 
 [ShadowRocket.conf](https://raw.githubusercontent.com/walls1717/quanX-conf/master/QuanX.conf)
 
@@ -27,7 +27,7 @@ CDN加速：
 
 `https://cdn.jsdelivr.net/gh/walls1717/qsc@master/ShadowRocket.conf`
 
-cfw：
+## CFW
 
 [cfw.yml](./cfw.yml)：区分常用地区，常用服务单独分流。
 
