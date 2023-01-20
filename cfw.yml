@@ -1,7 +1,11 @@
 # cfw预处理配置文件，更新订阅时自动合并，请确保没有开启diff。
 # 此配置对常用地区进行区分，并对常用服务单独分流。
 # 作者 walls1717
-# 最后更新时间 2023-01-18 17:40
+# 最后更新时间 2023-01-20 14:51
+#
+# 修复可能出现的Advertising Deadline BUG
+#
+#=========================
 
 parsers: # array
   - reg: ^.*$
@@ -143,6 +147,7 @@ parsers: # array
 
       # 添加规则
       prepend-rules: # 规则由上往下遍历，如上面规则已经命中，则不再往下处理
+        - RULE-SET,Direct,DIRECT
         - RULE-SET,Advertising,REJECT
         - RULE-SET,YouTube,YouTube
         - RULE-SET,YouTubeMusic,YouTube
@@ -157,11 +162,18 @@ parsers: # array
         - MATCH,Final
       # 添加规则集
       mix-rule-providers:
+        Direct:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Direct/Direct.yaml"
+          path: ./ruleset/Direct.yaml
+          interval: 86400
+
         Advertising:
           type: http
           behavior: classical
-          url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising_Classical.yaml"
-          path: ./ruleset/Advertising.yaml
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Advertising/Advertising_Classical.yaml"
+          path: ./ruleset/Advertising_Classical.yaml
           interval: 86400
 
         YouTube:
