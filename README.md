@@ -33,6 +33,12 @@ CDN加速：
 
 [cfw-clean.yml](./cfw-clean.yml)：不区分地区，常用服务单独分流。
 
+使用教程：
+
+> Settings->Profiles->Parsers
+>
+> 将cfw.yml或cfw-clean.yml文件中的内容拷贝到此处并更新配置文件。
+
 # 参考
 
 规则模板：https://github.com/sve1r/Rules-For-Quantumult-X
