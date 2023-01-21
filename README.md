@@ -5,7 +5,7 @@
 
 ## Quantumult X
 
-[QuanX.conf](https://raw.githubusercontent.com/walls1717/quanX-conf/master/QuanX.conf)
+[QuanX.conf](https://raw.githubusercontent.com/walls1717/quanX-conf/master/QuanX.conf)：有地区划分，常用服务单独分流
 
 无CDN加速：
 
@@ -14,6 +14,16 @@
 CDN加速：
 
 `https://cdn.jsdelivr.net/gh/walls1717/qsc@master/QuanX.conf`
+
+[QuanX-clean.conf](https://raw.githubusercontent.com/walls1717/quanX-conf/master/QuanX-clean.conf)：无地区划分，常用服务单独分流
+
+无CDN加速：
+
+`https://raw.githubusercontent.com/walls1717/qsc/master/QuanX-clean.conf`
+
+CDN加速：
+
+`https://cdn.jsdelivr.net/gh/walls1717/qsc@master/QuanX-clean.conf`
 
 ## ShadowRocket
 
@@ -29,9 +39,9 @@ CDN加速：
 
 ## CFW
 
-[cfw.yml](./cfw.yml)：区分常用地区，常用服务单独分流。
+[cfw.yml](./cfw.yml)：有地区划分，常用服务单独分流
 
-[cfw-clean.yml](./cfw-clean.yml)：不区分地区，常用服务单独分流。
+[cfw-clean.yml](./cfw-clean.yml)：无地区划分，常用服务单独分流
 
 使用教程：
 
