@@ -1,7 +1,7 @@
 # cfw预处理配置文件，更新订阅时自动合并，请确保没有开启diff。
 # 此配置对常用地区进行区分，并对常用服务单独分流。
 # 作者 walls1717
-# 最后更新时间 2023-01-20 14:51
+# 最后更新时间 2023-01-20 20:23
 #
 # 修复可能出现的Advertising Deadline BUG
 #
@@ -147,8 +147,10 @@ parsers: # array
 
       # 添加规则
       prepend-rules: # 规则由上往下遍历，如上面规则已经命中，则不再往下处理
+        - DOMAIN,clash.razord.top,DIRECT
+        - DOMAIN,yacd.haishan.me,DIRECT
         - RULE-SET,Direct,DIRECT
-        - RULE-SET,Advertising,REJECT
+        - RULE-SET,Advertising_Classical,REJECT
         - RULE-SET,YouTube,YouTube
         - RULE-SET,YouTubeMusic,YouTube
         - RULE-SET,Spotify,Spotify
@@ -169,10 +171,10 @@ parsers: # array
           path: ./ruleset/Direct.yaml
           interval: 86400
 
-        Advertising:
+        Advertising_Classical:
           type: http
           behavior: classical
-          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Advertising/Advertising_Classical.yaml"
+          url: "https://ghproxy.com/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Advertising/Advertising_Classical.yaml"
           path: ./ruleset/Advertising_Classical.yaml
           interval: 86400
 
