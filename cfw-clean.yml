@@ -1,7 +1,7 @@
 # cfw预处理配置文件，更新订阅时自动合并，请确保没有开启diff。
 # 此配置没有进行地区区分，只对常用服务进行单独分流。
 # 作者 walls1717
-# 最后更新时间 2023-01-20 20:23
+# 最后更新时间 2023-01-21 14:44
 #
 # 修复可能出现的Advertising Deadline BUG
 #
@@ -39,14 +39,14 @@ parsers: # array
         - name: 🍎苹果服务
           type: select
           proxies:
-            - 🔰国外流量
             - 🚀直接连接
+            - 🔰国外流量
 
         - name: 💻微软服务
           type: select
           proxies:
-            - 🔰国外流量
             - 🚀直接连接
+            - 🔰国外流量
 
         - name: 🚀直接连接
           type: select
@@ -64,7 +64,7 @@ parsers: # array
         - DOMAIN,clash.razord.top,DIRECT
         - DOMAIN,yacd.haishan.me,DIRECT
         - RULE-SET,Direct,DIRECT
-        - RULE-SET,Advertising,REJECT
+        - RULE-SET,Advertising_Classical,REJECT
         - RULE-SET,YouTube,🎬YouTube
         - RULE-SET,YouTubeMusic,🎬YouTube
         - RULE-SET,Spotify,🎬Spotify
