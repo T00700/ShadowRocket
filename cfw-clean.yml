@@ -1,10 +1,13 @@
 # cfw预处理配置文件，更新订阅时自动合并，请确保没有开启diff。
 # 此配置没有进行地区区分，只对常用服务进行单独分流。
-# 作者 walls1717
-# 最后更新时间 2023-01-21 14:44
 #
-# 修复可能出现的Advertising Deadline BUG
+# 作者：walls1717
 #
+# 最后更新时间：2023-01-30 21:26
+#
+# 最后一次更新说明：
+# 1.删除Apple、国外媒体、Google分流规则。
+# 
 #=========================
 
 parsers: # array
@@ -33,15 +36,6 @@ parsers: # array
         - name: 🎬Spotify
           type: select
 
-        - name: 🎬国外媒体
-          type: select
-
-        - name: 🍎苹果服务
-          type: select
-          proxies:
-            - 🚀直接连接
-            - 🔰国外流量
-
         - name: 💻微软服务
           type: select
           proxies:
@@ -68,11 +62,8 @@ parsers: # array
         - RULE-SET,YouTube,🎬YouTube
         - RULE-SET,YouTubeMusic,🎬YouTube
         - RULE-SET,Spotify,🎬Spotify
-        - RULE-SET,Google,🔰国外流量
         - RULE-SET,Microsoft,💻微软服务
-        - RULE-SET,GlobalMedia,🎬国外媒体
         - RULE-SET,Global,🔰国外流量
-        - RULE-SET,Apple,🍎苹果服务
         - RULE-SET,China,DIRECT
         - GEOIP,CN,DIRECT
         - MATCH,⚓️其他流量
@@ -113,13 +104,6 @@ parsers: # array
           path: ./ruleset/Spotify.yaml
           interval: 86400
 
-        Google:
-          type: http
-          behavior: classical
-          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Google/Google.yaml"
-          path: ./ruleset/Google.yaml
-          interval: 86400
-
         Microsoft:
           type: http
           behavior: classical
@@ -127,25 +111,11 @@ parsers: # array
           path: ./ruleset/Microsoft.yaml
           interval: 86400
 
-        GlobalMedia:
-          type: http
-          behavior: classical
-          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/GlobalMedia/GlobalMedia_Classical.yaml"
-          path: ./ruleset/GlobalMedia_Classical.yaml
-          interval: 86400
-
         Global:
           type: http
           behavior: classical
           url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Global/Global_Classical.yaml"
           path: ./ruleset/Global_Classical.yaml
-          interval: 86400
-
-        Apple:
-          type: http
-          behavior: classical
-          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple.yaml"
-          path: ./ruleset/Apple.yaml
           interval: 86400
 
         China:

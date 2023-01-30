@@ -5,7 +5,9 @@
 
 ## Quantumult X
 
-[QuanX.conf](https://raw.githubusercontent.com/walls1717/quanX-conf/master/QuanX.conf)：有地区划分，常用服务单独分流
+[QuanX-example](https://raw.githubusercontent.com/walls1717/quanX-conf/master/QuanX-example)：配置的详细说明，不推荐使用，比较杂乱。
+
+[QuanX.conf](https://raw.githubusercontent.com/walls1717/quanX-conf/master/QuanX.conf)：有地区划分，常用服务单独分流。
 
 无CDN加速：
 
@@ -15,7 +17,7 @@ CDN加速：
 
 `https://cdn.jsdelivr.net/gh/walls1717/qsc@master/QuanX.conf`
 
-[QuanX-clean.conf](https://raw.githubusercontent.com/walls1717/quanX-conf/master/QuanX-clean.conf)：无地区划分，常用服务单独分流
+[QuanX-clean.conf](https://raw.githubusercontent.com/walls1717/quanX-conf/master/QuanX-clean.conf)：无地区划分，常用服务单独分流。
 
 无CDN加速：
 

@@ -1,9 +1,12 @@
 # cfw预处理配置文件，更新订阅时自动合并，请确保没有开启diff。
 # 此配置对常用地区进行区分，并对常用服务单独分流。
-# 作者 walls1717
-# 最后更新时间 2023-01-20 20:23
+# 
+# 作者：walls1717
 #
-# 修复可能出现的Advertising Deadline BUG
+# 最后更新时间：2023-01-30 21:30
+#
+# 最后一次更新说明：
+# 1.调整Apple分流规则位置。
 #
 #=========================
 
@@ -157,8 +160,8 @@ parsers: # array
         - RULE-SET,Google,Google
         - RULE-SET,Microsoft,Microsoft
         - RULE-SET,GlobalMedia,GlobalMedia
-        - RULE-SET,Global,Global
         - RULE-SET,Apple,Apple
+        - RULE-SET,Global,Global
         - RULE-SET,China,DIRECT
         - GEOIP,CN,DIRECT
         - MATCH,Final
@@ -220,18 +223,18 @@ parsers: # array
           path: ./ruleset/GlobalMedia_Classical.yaml
           interval: 86400
 
-        Global:
-          type: http
-          behavior: classical
-          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Global/Global_Classical.yaml"
-          path: ./ruleset/Global_Classical.yaml
-          interval: 86400
-
         Apple:
           type: http
           behavior: classical
           url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Apple/Apple.yaml"
           path: ./ruleset/Apple.yaml
+          interval: 86400
+
+        Global:
+          type: http
+          behavior: classical
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Global/Global_Classical.yaml"
+          path: ./ruleset/Global_Classical.yaml
           interval: 86400
 
         China:
