@@ -21,8 +21,15 @@ parsers: # array
       }
     yaml:
       prepend-proxy-groups: # 建立策略组
+        - name: ♻️手动选择
+          type: select
+
         - name: 🔰国外流量
           type: select
+          proxies:
+            - 🇸🇬新加坡
+            - 🇭🇰香港
+            - ♻️手动选择
 
         - name: ⚓️其他流量
           type: select
@@ -32,9 +39,16 @@ parsers: # array
 
         - name: 🎬YouTube
           type: select
+          proxies:
+            - 🇭🇰香港
+            - 🇸🇬新加坡
 
         - name: 🎬Spotify
           type: select
+          proxies:
+            - 🇸🇬新加坡
+            - 🇭🇰香港
+            - 🚀直接连接
 
         - name: 💻微软服务
           type: select
@@ -47,12 +61,20 @@ parsers: # array
           proxies:
             - DIRECT
 
+        - name: 🇸🇬新加坡
+          type: url-test
+          url: http://www.msftconnecttest.com/connecttest.txt
+          interval: 3600
+
+        - name: 🇭🇰香港
+          type: url-test
+          url: http://www.msftconnecttest.com/connecttest.txt
+          interval: 3600
+
       commands:
-        - proxy-groups.🔰国外流量.proxies=[]proxyNames|^.*$
-        - proxy-groups.🎬YouTube.proxies=[]proxyNames|^.*$
-        - proxy-groups.🎬Spotify.proxies=[]proxyNames|^.*$
-        - proxy-groups.🎬国外媒体.proxies=[]proxyNames|^.*$
-        - proxy-groups.🎬Spotify.proxies.0+DIRECT
+        - proxy-groups.♻️手动选择.proxies=[]proxyNames|^.*$
+        - proxy-groups.🇸🇬新加坡.proxies=[]proxyNames|(?=.*(新加坡|SG|sg|Singapore))
+        - proxy-groups.🇭🇰香港.proxies=[]proxyNames|(?=.*(香港|HK|hk|Hong Kong))
 
       prepend-rules: # 规则由上往下遍历，如上面规则已经命中，则不再往下处理
         - DOMAIN,clash.razord.top,DIRECT
