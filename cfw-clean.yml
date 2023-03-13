@@ -3,7 +3,7 @@
 #
 # 作者：walls1717
 #
-# 最后更新时间：2023-03-02 16:21
+# 最后更新时间：2023-03-13 15:23
 # 
 #=========================
 
@@ -18,75 +18,75 @@ parsers: # array
       }
     yaml:
       prepend-proxy-groups: # 建立策略组
-        - name: ✋Select
+        - name: Select
           type: select
 
-        - name: 🌎Outside
-          type: select
-          proxies:
-            - 🇸🇬SG
-            - 🇭🇰HK
-            - ✋Select
-
-        - name: 🐟Final
+        - name: Outside
           type: select
           proxies:
-            - 🌎Outside
-            - ⚪Direct
+            - SG
+            - HK
+            - Select
 
-        - name: 🎬YouTube
+        - name: Final
           type: select
           proxies:
-            - 🇭🇰HK
-            - 🇸🇬SG
-            - 🌎Outside
+            - Outside
+            - Direct
 
-        - name: 🎬Spotify
+        - name: YouTube
           type: select
           proxies:
-            - 🌎Outside
-            - ⚪Direct
-            - ✋Select
+            - HK
+            - SG
+            - Outside
 
-        - name: 💻Microsoft
+        - name: Spotify
           type: select
           proxies:
-            - ⚪Direct
-            - 🌎Outside
+            - Outside
+            - Direct
+            - Select
 
-        - name: ⚪Direct
+        - name: Microsoft
+          type: select
+          proxies:
+            - Direct
+            - Outside
+
+        - name: Direct
           type: select
           proxies:
             - DIRECT
 
-        - name: 🇸🇬SG
+        - name: SG
           type: url-test
           url: http://www.msftconnecttest.com/connecttest.txt
           interval: 3600
 
-        - name: 🇭🇰HK
+        - name: HK
           type: url-test
           url: http://www.msftconnecttest.com/connecttest.txt
           interval: 3600
 
       commands:
-        - proxy-groups.✋Select.proxies=[]proxyNames|^.*$
-        - proxy-groups.🇸🇬SG.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|SG|sg|SGP|sgp|Singapore|狮城))
-        - proxy-groups.🇭🇰HK.proxies=[]proxyNames|(?=.*(🇭🇰|香港|HK|HKG|hk|hkg|Hong Kong|HongKong|hongkong|hong kong))
+        - proxy-groups.Select.proxies=[]proxyNames|^.*$
+        - proxy-groups.SG.proxies=[]proxyNames|(?=.*(🇸🇬|新加坡|SG|sg|SGP|sgp|Singapore|狮城))
+        - proxy-groups.HK.proxies=[]proxyNames|(?=.*(🇭🇰|香港|HK|HKG|hk|hkg|Hong Kong|HongKong|hongkong|hong kong))
 
       prepend-rules: # 规则由上往下遍历，如上面规则已经命中，则不再往下处理
         - DOMAIN,clash.razord.top,DIRECT
         - DOMAIN,yacd.haishan.me,DIRECT
         - RULE-SET,Direct,DIRECT
         - RULE-SET,Advertising_Classical,REJECT
-        - RULE-SET,YouTube,🎬YouTube
-        - RULE-SET,YouTubeMusic,🎬YouTube
-        - RULE-SET,Spotify,🎬Spotify
-        - RULE-SET,Microsoft,💻Microsoft
-        - RULE-SET,Global,🌎Outside
+        - RULE-SET,YouTube,YouTube
+        - RULE-SET,YouTubeMusic,YouTube
+        - RULE-SET,Spotify,Spotify
+        - RULE-SET,Microsoft,Microsoft
+        - RULE-SET,Global,Outside
         - RULE-SET,China,DIRECT
         - GEOIP,CN,DIRECT
-        - MATCH,🐟Final
+        - MATCH,Final
 
       mix-rule-providers:
         Direct:
@@ -141,6 +141,6 @@ parsers: # array
         China:
           type: http
           behavior: classical
-          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/China/China_Classical.yaml"
-          path: ./ruleset/China_Classical.yaml
+          url: "https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml"
+          path: ./ruleset/ChinaMax_Classical.yaml
           interval: 86400
